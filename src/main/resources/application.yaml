@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: knowledge-assist
+  main:
+    web-application-type: none
+  ai:
+    openai:
+      api-key: ${LLM_GATEWAY_TOKEN}                        # use your gateway token
+      base-url: ${LLM_GATEWAY_URL:http://localhost:8000}  # your LLM gateway URL
+      chat:
+        model: ${LLM_MODEL:gpt-4o-mini}                         # model available in your gateway
+      embedding:
+        model: ${EMBEDDING_MODEL:text-embedding-3-small}  # optional: for embeddings
