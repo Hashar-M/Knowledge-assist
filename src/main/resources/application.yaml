@@ -20,6 +20,12 @@ rag:
 app:
   run-embedding-demo: false
   run-hello-rag-runner: false
+  search:
+    base-url: http://localhost:9200
+    alias: chunks
+    mapping-version: 1
+    embedding-dims: 1536
+    embedding-model: text-embedding-3-small
 
 management:
   endpoints:
