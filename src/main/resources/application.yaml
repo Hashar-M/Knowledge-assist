@@ -3,6 +3,9 @@ spring:
     name: knowledge-assist
   main:
     web-application-type: none
+  elasticsearch:
+    # Overridable with the ES_URIS environment variable, for example in Kubernetes later
+    uris: ${ES_URIS:http://localhost:9200}
   ai:
     openai:
       api-key: ${LLM_GATEWAY_TOKEN}                        # use your gateway token
@@ -11,3 +14,18 @@ spring:
         model: ${LLM_MODEL:gpt-4o-mini}                         # model available in your gateway
       embedding:
         model: ${EMBEDDING_MODEL:text-embedding-3-small}  # optional: for embeddings
+rag:
+  elasticsearch:
+    index-alias: chunks   # Chapter 5 creates the index behind this alias
+app:
+  run-embedding-demo: false
+  run-hello-rag-runner: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-components: always   # dev only: show each component's status in the JSON

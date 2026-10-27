@@ -5,6 +5,7 @@ import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Component
+@ConditionalOnProperty(name = "app.run-hello-rag-runner", havingValue = "true")
 class HelloRagRunner implements ApplicationRunner {
 
     private static final String ANSWERABLE_QUESTION =
