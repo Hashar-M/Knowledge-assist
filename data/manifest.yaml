@@ -1,0 +1,46 @@
+# data/manifest.yaml - COMMITTED. One entry per product.
+products:
+  - name: spring-boot
+    repo: https://github.com/spring-projects/spring-boot.git
+    ref: main                 # branch used for the first clone
+    commit: "d6e1b249d025ec2fc5c4ff87f451c62682c958fa"                # pinned SHA, filled in on first run
+    docs_root: documentation/spring-boot-docs/src/docs/antora/modules/reference/pages
+    license: Apache-2.0
+    source_url_template: "https://docs.spring.io/spring-boot/reference/{page}.html"   # VERIFY
+    local_only: false
+
+  - name: spring-ai
+    repo: https://github.com/spring-projects/spring-ai.git
+    ref: main
+    commit: "b90fb6f847ff7b35ab5162ced29012320240aaba"
+    docs_root: spring-ai-docs/src/main/antora/modules/ROOT/pages
+    license: Apache-2.0
+    source_url_template: "https://docs.spring.io/spring-ai/reference/{page}.html"    # VERIFY
+    local_only: false
+
+  - name: kafka
+    repo: https://github.com/apache/kafka-site.git
+    ref: asf-site
+    commit: "b3d0e97a6acd3f72ba659364550d02ee143ef6a3"
+    docs_root: "40"           # newest numeric version folder on asf-site (check it)
+    license: Apache-2.0
+    source_url_template: "https://kafka.apache.org/40/{path}"
+    local_only: false
+
+  - name: kubernetes
+    repo: https://github.com/kubernetes/website.git
+    ref: main
+    commit: "ed70e311737a341574ed5758b7af24e3bba232cb"
+    docs_root: content/en/docs
+    license: CC-BY-4.0        # docs; code samples are Apache-2.0
+    source_url_template: "https://kubernetes.io/docs/{page}/"                         # VERIFY
+    local_only: false
+
+  - name: elasticsearch-reference
+    repo: https://github.com/elastic/docs-content.git
+    ref: main
+    commit: "6351fc433e0f540f80fec8a452ff0fba052d8685"
+    docs_root: "REPLACE-IN-STEP-4"
+    license: CC-BY-NC-ND-4.0
+    source_url_template: "https://www.elastic.co/guide/en/elasticsearch/reference/current/{page}.html"  # VERIFY
+    local_only: true          # NEVER commit text, chunks or embeddings from this product

@@ -1,0 +1,12 @@
+# data/starter-files.txt - Phase 1 starter subset (paths relative to docs_root)
+spring-boot/data/nosql.adoc
+spring-boot/actuator/endpoints.adoc
+spring-boot/io/rest-client.adoc
+spring-ai/getting-started.adoc
+spring-ai/api/mcp/mcp-client-boot-starter-docs.adoc
+kafka/intro/index.html
+kafka/design/design/index.html
+#kafka/ops.html
+kubernetes/concepts/workloads/pods/_index.md
+# Add Elasticsearch lines after Step 5, e.g.:
+# elasticsearch-reference/<path under your chosen folder>.md
