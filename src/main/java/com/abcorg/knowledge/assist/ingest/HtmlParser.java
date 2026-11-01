@@ -55,7 +55,46 @@ public final class HtmlParser implements DocumentParser {
                 : doc
                         .title()
                         .strip();
-        return new ParsedDocument(title, TextUtil.normalize(main.text()), headings, warnings);
+
+        // Extract text, but preserve line breaks in <pre> blocks
+        String text = extractTextWithPreservation(main);
+
+        return new ParsedDocument(title, TextUtil.normalize(text), headings, warnings);
+    }
+
+    /**
+     * Extract text from an element while preserving line breaks in <pre> blocks.
+     * We build a text string that includes pre block content with original line breaks intact,
+     * then normalize the rest. This is done by extracting pre content separately and
+     * then normalizing the whole result carefully.
+     */
+    private static String extractTextWithPreservation(Element element) {
+        Element cloned = element.clone();
+
+        // Map to store pre block contents before they're removed
+        java.util.Map<String, String> preContentMap = new java.util.LinkedHashMap<>();
+        int preIndex = 0;
+
+        // Extract and store pre block content using wholeText()
+        for (Element preBlock : cloned.select("pre")) {
+            String placeholder = "\n<<<PRE_BLOCK_" + (preIndex++) + ">>>\n";
+            String preContent = preBlock.wholeText();
+            preContentMap.put(placeholder, preContent);
+            // Replace the pre block with a placeholder
+            preBlock.replaceWith(new org.jsoup.nodes.TextNode(placeholder));
+        }
+
+        // Get the normalized text
+        String text = cloned.text();
+
+        // Restore pre block content, preserving their line breaks
+        for (java.util.Map.Entry<String, String> entry : preContentMap.entrySet()) {
+            // Normalize the placeholder since text() normalizes whitespace
+            String normalizedPlaceholder = entry.getKey().replaceAll("\\s+", " ").trim();
+            text = text.replace(normalizedPlaceholder, entry.getValue());
+        }
+
+        return text;
     }
 
     /**

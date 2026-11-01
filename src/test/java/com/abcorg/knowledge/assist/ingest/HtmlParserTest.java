@@ -39,5 +39,26 @@ class HtmlParserTest {
         assertThat(d.text()).doesNotContain("Site menu").doesNotContain("Copyright").doesNotContain("var x");
         assertThat(d.warnings()).hasSize(1);
     }
+
+    @Test
+    void preservesLineBreaksInPreBlocks() {
+        String htmlWithPre = """
+                <!doctype html>
+                <html><head><title>Code Example</title></head>
+                <body>
+                <main>
+                <h1>Example</h1>
+                <p>Here is some code:</p>
+                <pre>line one
+                  indented line two
+                line three</pre>
+                <p>End of example.</p>
+                </main>
+                </body></html>
+                """;
+        ParsedDocument d = new HtmlParser().parse(htmlWithPre);
+
+        assertThat(d.text()).contains("line one\n  indented line two\nline three");
+    }
 }
 
