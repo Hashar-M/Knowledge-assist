@@ -1,0 +1,6 @@
+package com.abcorg.knowledge.assist.exception;
+
+public class IngestException extends RuntimeException {
+    public IngestException(String message) { super(message); }
+    public IngestException(String message, Throwable cause) { super(message, cause); }
+}

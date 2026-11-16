@@ -1,0 +1,18 @@
+package com.abcorg.knowledge.assist.ingest;
+
+import java.nio.charset.StandardCharsets;
+
+public final class ChunkIds {
+    private static final int ES_MAX_ID_BYTES = 512;
+
+    private ChunkIds() {
+    }
+
+    public static String of(String docId, int ordinal) {
+        String id = docId + "#" + ordinal;
+        if (id.getBytes(StandardCharsets.UTF_8).length > ES_MAX_ID_BYTES) {
+            throw new IllegalArgumentException("Chunk id longer than " + ES_MAX_ID_BYTES + " bytes: " + id);
+        }
+        return id;
+    }
+}
