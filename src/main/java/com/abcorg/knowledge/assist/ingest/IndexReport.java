@@ -5,5 +5,6 @@ import java.util.List;
 
 public final class IndexReport {
     public int indexed;
+    public long promptTokens;
     public final List<String> failed = new ArrayList<>();
 }

@@ -14,16 +14,22 @@ spring:
         model: ${LLM_MODEL:gpt-4o-mini}                         # model available in your gateway
       embedding:
         model: ${EMBEDDING_MODEL:text-embedding-3-small}  # optional: for embeddings
+    retry:
+      max-attempts: 3                         # Spring AI retry layer (documented default is 10)
 rag:
   elasticsearch:
     index-alias: chunks   # Chapter 5 creates the index behind this alias
+  chunking:
+    max-tokens: 500
+    overlap-tokens: 50
   ingest:
     batch-size: 64
-    max-attempts: 4
+    max-attempts: 3
     initial-backoff: 500ms
     expected-dimensions: 1536
-    embedding-model-name: text-embedding-3-small
+#    embedding-model-name: text-embedding-3-small
     price-per-million-tokens: 0.02        # verify on the provider pricing page
+    data-dir: data
 app:
   run-embedding-demo: false
   run-hello-rag-runner: false
