@@ -1,8 +1,9 @@
 spring:
   application:
     name: knowledge-assist
-  main:
-    web-application-type: none
+#  main:
+#    web-application-type: none  # CH9: web-application-type: none removed.
+
   elasticsearch:
     # Overridable with the ES_URIS environment variable, for example in Kubernetes later
     uris: ${ES_URIS:http://localhost:9200}
@@ -10,12 +11,18 @@ spring:
     openai:
       api-key: ${LLM_GATEWAY_TOKEN}                        # use your gateway token
       base-url: ${LLM_GATEWAY_URL:http://localhost:8000}  # your LLM gateway URL
+      timeout: 30s  # CH9 VERIFY: key listed on the 2.1 docs page; confirm for your 2.0.x
       chat:
         model: ${LLM_MODEL:gpt-4o-mini}                         # model available in your gateway
+        temperature: 0.2          # CH9: low, so answers stay close to the excerpts. Remove if your model rejects it
       embedding:
         model: ${EMBEDDING_MODEL:text-embedding-3-small}  # optional: for embeddings
     retry:
       max-attempts: 3                         # Spring AI retry layer (documented default is 10)
+
+server:                            # CH9
+  address: 127.0.0.1               # this endpoint spends money: do not expose it yet (Chapters 20 and 22)
+  port: 8080
 rag:
   elasticsearch:
     index-alias: chunks   # Chapter 5 creates the index behind this alias
@@ -30,6 +37,12 @@ rag:
 #    embedding-model-name: text-embedding-3-small
     price-per-million-tokens: 0.02        # verify on the provider pricing page
     data-dir: data
+  ask: # CH9
+    top-k: 5                       # a guess: Chapter 10 measures it
+    num-candidates: 50             # a guess: must be >= top-k
+    max-context-tokens: 3000
+    snippet-chars: 300
+    search-timeout: 5s
 app:
   run-embedding-demo: false
   run-hello-rag-runner: false

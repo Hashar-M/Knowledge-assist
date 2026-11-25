@@ -35,3 +35,6 @@ services:
 
 volumes:
   es-data:
+
+#  docker-compose  --profile tools up -d
+#  docker-compose -f dev-tools/docker-compose.yml --profile tools down
